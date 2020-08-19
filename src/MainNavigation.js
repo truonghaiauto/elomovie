@@ -1,24 +1,38 @@
 // In App.js in a new project
 
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import SplashScreen from './screens/SplashScreen';
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+
+//import SplashScreen from './compenents/screens/SplashScreen';
+
+import MainTabScreen from './components/screens/MainTabScreen';
 
 const Stack = createStackNavigator();
 
-function App() {
-    return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName="SplashScreen">
-                <Stack.Screen
-                    name="SplashScreen"
-                    component={SplashScreen}
-                    options={{ headerShown: false }} />
+function MainNavigation({navigation}) {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="MainTabScreen">
+        <Stack.Screen
+          name="MainTabScreen"
+          component={MainTabScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
 
-            </Stack.Navigator>
-        </NavigationContainer>
-    );
+        {/* <Stack.Screen
+          name="MainTabScreen"
+          component={MainTabScreen}
+          options={{
+            headerTitleAlign: 'center',
+          }}
+        /> */}
+        
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
 
-export default App;
+export default MainNavigation;
