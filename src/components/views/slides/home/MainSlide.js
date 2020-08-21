@@ -7,11 +7,12 @@ import {
   FlatList,
   Animated,
 } from 'react-native';
-import CarouselItem from '../itemsView/mainSlideItems';
+import CarouselItem from '../../itemsView/home/MainSlide';
 
 const {width, heigth} = Dimensions.get('window');
 
 function Carousel({data}) {
+  
   let flatList;
 
   const infiniteScroll = (dataList) => {
@@ -66,7 +67,6 @@ function Carousel({data}) {
     );
   }
 
-  console.log('Please provide Images');
   return null;
 }
 

@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import Icons from 'react-native-vector-icons/Feather';
-import themes from '../constants/themes';
+import themes from '../../components/views/styles/themes';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -17,10 +17,10 @@ function MainTabScreen({navigation}) {
   const tabBarColor = themes.colors.white;
 
   const tabBarLabel = {
-    tab1: 'Home',
-    tab2: 'Movies',
-    tab3: 'Videos',
-    tab4: 'Settings',
+    tab1: 'Trang chủ',
+    tab2: 'Phim',
+    tab3: 'Clips',
+    tab4: 'Cài đặt',
   }
   
   const iconName = {

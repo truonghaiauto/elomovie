@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, Image, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import styles from '../views/styles/Home.styles';
 import images from '../../assets/images/index';
 
@@ -7,14 +14,32 @@ import Icons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import Themes from '../constants/themes';
+import Themes from '../views/styles/themes';
 
-import data from '../views/data';
-import MainSlide from '../views/contacts/homeMainSlide';
-import SideSlide from '../views/contacts/homeSideSlide';
+import dataTest from '../contacts/data/data';
+import myServices from '../contacts/data/services';
+
+import MainSlide from '../views/slides/home/MainSlide';
+import HotActors from '../views/slides/home/HotActors';
+import SideSlide from '../views/slides/home/SideSlide';
 
 function HomeScreen({navigation}) {
-  let isActors = true;
+  const [isLoading, setLoading] = useState(false);
+  const [newestMoviesList, setNewestMovies] = useState([]);
+
+  useEffect(() => {
+    myServices.getNewestMovies(data => {
+      setNewestMovies(data);
+    })
+  }, []);
+
+  if (isLoading) {
+    return (
+      <View style={{flex: 1, paddingTop: 30}}>
+        <ActivityIndicator animating={true} size="large" />
+      </View>
+    );
+  }
 
   return (
     <ScrollView>
@@ -38,7 +63,7 @@ function HomeScreen({navigation}) {
         <View style={styles.body}>
           {/* Main Slide */}
           <View style={styles.mainSlide}>
-            <MainSlide data={data} />
+            <MainSlide data={dataTest} />
           </View>
 
           {/* Icons */}
@@ -50,8 +75,9 @@ function HomeScreen({navigation}) {
                 color={Themes.colors.red}
                 size={26}
               />
-              <Text style={styles.IconTxt}>Films</Text>
+              <Text style={styles.IconTxt}>Chiếu rạp</Text>
             </TouchableOpacity>
+
             <TouchableOpacity style={styles.IconBox}>
               <MaterialIcons
                 style={styles.searchIcon}
@@ -59,7 +85,7 @@ function HomeScreen({navigation}) {
                 color={Themes.colors.red}
                 size={26}
               />
-              <Text style={styles.IconTxt}>Videos</Text>
+              <Text style={styles.IconTxt}>Trailer</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.IconBox}>
               <MaterialCommunityIcons
@@ -68,7 +94,7 @@ function HomeScreen({navigation}) {
                 color={Themes.colors.red}
                 size={26}
               />
-              <Text style={styles.IconTxt}>Catoons</Text>
+              <Text style={styles.IconTxt}>Hoạt hình</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.IconBox}>
               <MaterialCommunityIcons
@@ -77,26 +103,26 @@ function HomeScreen({navigation}) {
                 color={Themes.colors.red}
                 size={26}
               />
-              <Text style={styles.IconTxt}>Another</Text>
+              <Text style={styles.IconTxt}>Thể loại</Text>
             </TouchableOpacity>
           </View>
 
           {/* Hot actors */}
           <View style={styles.sideSlideContainer}>
-            <Text style={styles.titleSideSlide}>Hot actors</Text>
-            <SideSlide data={data} params={isActors}/>
+            <Text style={styles.titleSideSlide}>Diễn viên nổi bật</Text>
+            <HotActors data={dataTest} />
+          </View>
+
+          {/* Recommended Film */}
+          <View style={styles.sideSlideContainer}>
+            <Text style={styles.titleSideSlide}>Phim đề cử</Text>
+            <SideSlide data={dataTest} />
           </View>
 
           {/* Newest Film */}
           <View style={styles.sideSlideContainer}>
-            <Text style={styles.titleSideSlide}>For you babe...ư!</Text>
-            <SideSlide data={data} />
-          </View>
-
-          {/* Another films */}
-          <View style={styles.sideSlideContainer}>
-            <Text style={styles.titleSideSlide}>Newest movies</Text>
-            <SideSlide data={data} />
+            <Text style={styles.titleSideSlide}>Phim mới nhất</Text>
+            <SideSlide data={newestMoviesList} />
           </View>
 
           {/* Bla blaaa */}
